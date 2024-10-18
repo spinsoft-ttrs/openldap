@@ -1,0 +1,22 @@
+services:
+  ldap:
+    image: bitnami/openldap:latest
+    env_file:
+      - ldap.env
+    ports:
+      - '1389:1389'  # LDAP port
+      - '1636:1636'  # LDAPS port
+    volumes:
+      - ldap_data:/bitnami/openldap
+      - './ldap/initdb:/docker-entrypoint-initdb.d'
+      - './ldap/schemas:/schemas'
+      - './ldap/ldifs:/ldifs'
+  api:
+    build: ./api
+    ports:
+      - '8000:8000'
+    depends_on:
+      - ldap
+
+volumes:
+  ldap_data:

@@ -1,0 +1,18 @@
+dn: olcDatabase={2}mdb,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess: to attrs=uid,memberOf,writeUser,writeConfig,limitVdos
+  by dn.exact="cn=admin,dc=example,dc=com" write
+  by anonymous auth
+  by self read
+  by * none
+olcAccess: to attrs=userPassword
+  by dn.exact="cn=admin,dc=example,dc=com" write
+  by anonymous auth
+  by self write
+  by * none
+olcAccess: to *
+  by dn.exact="cn=admin,dc=example,dc=com" write
+  by anonymous auth
+  by self write
+  by * none
