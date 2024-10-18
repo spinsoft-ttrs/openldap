@@ -11,6 +11,17 @@ services:
       - './ldap/initdb:/docker-entrypoint-initdb.d'
       - './ldap/schemas:/schemas'
       - './ldap/ldifs:/ldifs'
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - 8080:8080
+    depends_on:
+      - ldap
+    command:
+      - start-dev
   api:
     build: ./api
     ports:
